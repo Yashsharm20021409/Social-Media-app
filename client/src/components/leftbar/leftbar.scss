@@ -1,68 +1,72 @@
+@import "../../style.scss";
+
 .leftbar {
-    flex: 2; // set how much width we want covered by our container we can also use width but here we used this
-    // 2 for leftbar 3 for rightbar and biggest one 6 for outlet on app.js page
+    @include themify($themes) {
+        flex: 2; // set how much width we want covered by our container we can also use width but here we used this
+        // 2 for leftbar 3 for rightbar and biggest one 6 for outlet on app.js page
 
-    // this three to avoid scroll on page we want to fixed all in view page and add over scroll bar
-    // choose top 70? 50 is height of navbar + 10 + 10 padding and margin we give in navbar component
-    top: 70px;
-    position: sticky;
-    overflow: scroll;
-    height: calc(100vh - 70px); // to cover only page view height we don't set diff for diff screen so we used calc function 100vh is page height 70px is postion of container from top/start of page
-    background-color: white;
-    color: black;
+        // this three to avoid scroll on page we want to fixed all in view page and add over scroll bar
+        // choose top 70? 50 is height of navbar + 10 + 10 padding and margin we give in navbar component
+        top: 70px;
+        position: sticky;
+        overflow: scroll;
+        height: calc(100vh - 70px); // to cover only page view height we don't set diff for diff screen so we used calc function 100vh is page height 70px is postion of container from top/start of page
+        background-color: themed("bg");
+        color: themed("textColor");
 
-    // to remove scrollbar visibility only
-    &::-webkit-scrollbar {
-        display: none;
-    }
-
-    .container {
-        padding: 20px;
-
-        hr {
-            margin: 20px 0px;
-            border: none;
-            height: 0.5px;
-            background-color: black;
+        // to remove scrollbar visibility only
+        &::-webkit-scrollbar {
+            display: none;
         }
 
-        .menu {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
+        .container {
+            padding: 20px;
 
-            span {
-                font-size: 12px;
+            hr {
+                margin: 20px 0px;
+                border: none;
+                height: 0.5px;
+                background-color: themed("border");
             }
 
-            .user {
+            .menu {
                 display: flex;
-                align-items: center;
-                gap: 10px; // to give space between ele row/col wise both check using hover in inspect
-
-                img {
-                    width: 30px;
-                    height: 30px;
-                    border-radius: 50%;
-                    object-fit: cover;
-                }
+                flex-direction: column;
+                gap: 20px;
 
                 span {
-                    font-size: 14px;
-                }
-            }
-
-            .item {
-                display: flex;
-                align-items: center;
-                gap: 10px;
-
-                img {
-                    width: 30px;
+                    font-size: 12px;
                 }
 
-                span {
-                    font-size: 14px;
+                .user {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px; // to give space between ele row/col wise both check using hover in inspect
+
+                    img {
+                        width: 30px;
+                        height: 30px;
+                        border-radius: 50%;
+                        object-fit: cover;
+                    }
+
+                    span {
+                        font-size: 14px;
+                    }
+                }
+
+                .item {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+
+                    img {
+                        width: 30px;
+                    }
+
+                    span {
+                        font-size: 14px;
+                    }
                 }
             }
         }

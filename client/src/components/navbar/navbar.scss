@@ -1,64 +1,70 @@
+@import "../../style.scss";
+
 .navbar {
 
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 50px;
-    border-bottom: 1px solid lightgray;
-    color: black;
-    background-color: rgb(200, 222, 230);
-    top: 0;
-    position: sticky;
-    z-index: 999;
-    padding: 10px 20px;
+    @include themify($themes) {
 
-    .left {
-        cursor: pointer;
+
         display: flex;
+        justify-content: space-between;
         align-items: center;
-        gap: 30px;
+        height: 50px;
+        border-bottom: 1px solid themed("border");
+        background-color: themed("bg");
+        color: themed("textColor");
+        top: 0;
+        position: sticky;
+        z-index: 999;
+        padding: 10px 20px;
 
-        span{
-            color: black;
-            font-size: 30px;
-            font-weight: 600;
-        }
-
-        .search {
+        .left {
+            cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 10px;
-            border: 1px solid black;
-            border-radius: 5px;
-            padding: 5px;
+            gap: 30px;
+
+            span {
+                color: themed("logo");
+                font-size: 30px;
+                font-weight: 600;
+            }
+
+            .search {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                border: 1px solid themed("border");
+                border-radius: 5px;
+                padding: 5px;
+            }
+
+            input {
+                border: none;
+                width: 500px;
+                background-color: transparent;
+                color: themed("textColor");
+                outline: none;
+            }
         }
 
-        input {
-            border: none;
-            width: 500px;
-            background-color: transparent;
-            color: black;
-            outline: none;
-        }
-    }
-
-    .right {
-        display: flex;
-        align-items: center;
-        gap: 20px;
-        cursor: pointer;
-
-        .user {
+        .right {
             display: flex;
             align-items: center;
-            gap: 10px;
-            font-weight: 500;
+            gap: 20px;
+            cursor: pointer;
 
-            img {
-                width: 30px;
-                height: 30px;
-                border-radius: 50%;
-                object-fit: cover;
+            .user {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                font-weight: 500;
+
+                img {
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 50%;
+                    object-fit: cover;
+                }
             }
         }
     }

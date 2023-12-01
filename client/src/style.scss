@@ -1,0 +1,56 @@
+$themes: (
+    light: (textColor: #000,
+        bg: white,
+        logo: darkblue,
+        bgSoft: #f6f3f3,
+        textColorSoft: #555,
+        border: lightgray,
+    ),
+    dark: (textColor: whitesmoke,
+        bg: #222,
+        logo: white,
+        bgSoft: #333,
+        textColorSoft: lightgray,
+        border: #444,
+    ),
+);
+
+// this is the function for theme apply you can use other method/easy method but this is convinent method less code need to write in other method we have to write for every components same thing
+// learn if you want it will we be same everytime
+// we used map to map our above light and dark theme
+@mixin themify($themes) {
+    @each $theme, $map in $themes {
+        .theme-#{$theme} & {
+            $theme-map: (
+                ) !global;
+
+            @each $key, $submap in $map {
+                $value: map-get(map-get($themes, $theme), "#{$key}"
+                );
+            $theme-map: map-merge($theme-map,
+                    ($key: $value,
+                    )) !global;
+        }
+
+        @content;
+        $theme-map: null !global;
+    }
+}
+}
+
+//   this is method to use this theme everywhere in web application
+@function themed($key) {
+    @return map-get($theme-map, $key);
+}
+
+@mixin mobile {
+    @media (max-width: 480px) {
+        @content;
+    }
+}
+
+@mixin tablet {
+    @media (max-width: 960px) {
+        @content;
+    }
+}

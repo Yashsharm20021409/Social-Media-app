@@ -6,20 +6,24 @@ import RightBar from "./components/rightbar/Rightbar";
 import Home from "./pages/home/Home";
 import Profile from "./pages/profile/Profile"
 import { createBrowserRouter, RouterProvider, Outlet, Navigate } from "react-router-dom";
-
+import { useContext } from "react";
+import { AuthContext } from "./context/authContext";
+import { DarkModeContext } from "./context/darkModeContext";
+import "./style.scss"
 
 function App() {
 
-  const currentUser = true;
+  const { currentUser } = useContext(AuthContext)
+  const { darkMode } = useContext(DarkModeContext)
 
 
   const Layout = () => {
     return (
-      <div >
+      <div className={`theme-${darkMode ? 'dark' : 'light'}`}>
         <Navbar />
         <div style={{ display: "flex" }}>
           <LeftBar />
-          <div style={{flex:6}}>
+          <div style={{ flex: 6 }}>
             <Outlet />
           </div>
           <RightBar />
@@ -35,9 +39,9 @@ function App() {
   // maintain it on one page otherwise we have to write same code on different components
 
 
-  const ProtectedRoute = ({children}) =>{
-    if(!currentUser){
-      return <Navigate to="/login"/>
+  const ProtectedRoute = ({ children }) => {
+    if (!currentUser) {
+      return <Navigate to="/login" />
     }
 
     // if logged in return children which is layout here
