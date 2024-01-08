@@ -8,7 +8,7 @@ import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import { Link } from "react-router-dom"
-import profile from "./vecteezy_profile-icon-design-vector_5544718.jpg"
+// import profile from "./vecteezy_profile-icon-design-vector_5544718.jpg"
 import { useContext } from "react";
 import { DarkModeContext } from "../../context/darkModeContext";
 import { AuthContext } from "../../context/authContext";
@@ -36,12 +36,12 @@ const Navbar = () => {
         </div>
       </div>
       <div className="right">
-        <PersonOutlinedIcon />
-        <EmailOutlinedIcon />
-        <NotificationsOutlinedIcon />
+        <PersonOutlinedIcon className="right-icon"/>
+        <EmailOutlinedIcon className="right-icon"/>
+        <NotificationsOutlinedIcon className="right-icon"/>
         <div className="user">
           <img src={currentUser.profilePic} />
-          <span>{currentUser.name}</span>
+          <span className="user-Name">{currentUser.name}</span>
         </div>
       </div>
     </div>

@@ -14,6 +14,10 @@
         background-color: themed("bg");
         color: themed("textColor");
 
+        @include mobile{
+            display: none;
+          }
+
         // to remove scrollbar visibility only
         &::-webkit-scrollbar {
             display: none;

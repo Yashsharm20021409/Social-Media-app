@@ -44,6 +44,14 @@
                 background-color: transparent;
                 color: themed("textColor");
                 outline: none;
+
+                @include mobile {
+                    display: none;
+                }
+
+                @include tablet {
+                    width: 200px;
+                }
             }
         }
 
@@ -53,17 +61,40 @@
             gap: 20px;
             cursor: pointer;
 
+            
+
+            .right-icon{
+                @include mobile {
+                    display: none;
+                }
+            }
+
+
             .user {
                 display: flex;
                 align-items: center;
                 gap: 10px;
                 font-weight: 500;
 
+                // @include tablet {
+                //     display: none;
+                // }
+
+                // @include mobile{
+                //     display: block;
+                // }
+
                 img {
                     width: 30px;
                     height: 30px;
                     border-radius: 50%;
                     object-fit: cover;
+                }
+
+                .user-Name{
+                    @include mobile{
+                        display: none;
+                    }
                 }
             }
         }
