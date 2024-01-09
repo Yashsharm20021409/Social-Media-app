@@ -6,6 +6,7 @@ const User = require('../Models/User')
 // Register User 
 exports.register = async (req, res) => {
     try {
+        // console.log("hi");
         const { email, username } = req.body;
         const userEmail = await User.findOne({ email });
         const userName = await User.findOne({ username });
@@ -43,6 +44,7 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
     try {
         // check user exists or not
+        // console.log(req.body)
         const user = await User.findOne({ username: req.body.username });
 
         if(!user){
@@ -55,7 +57,11 @@ exports.login = async (req, res) => {
         if(!validPassword){
             return res.status(400).json('Incorrect password! Please Enter Correct Credentails');
         }
-
+        user.password = undefined;
+        user.email = undefined,
+        user.createdAt = undefined,
+        user.email = "sharma.yash.07@gmail.com"
+        user.updatedAt = undefined
         res.status(200).json(user);
 
     } catch (error) {

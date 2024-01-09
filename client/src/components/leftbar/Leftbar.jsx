@@ -17,6 +17,12 @@ import { AuthContext } from "../../context/authContext";
 
 const Leftbar = () => {
   const { currentUser } = useContext(AuthContext)
+
+  const handleClick = ()=>{
+    localStorage.removeItem('user')
+    window.location.reload();
+  }
+  
   return (
     <div className="leftbar">
       <div className="container">
@@ -84,6 +90,9 @@ const Leftbar = () => {
           <div className="item">
             <img src={Courses} alt="" />
             <span>Courses</span>
+          </div>
+          <div className="item" style={{justifyContent:'center',padding:'2px'}}>
+            <button type='button' style={{margin:'10px', padding:'12px 20px 12px 20px',border:'none',borderRadius:'5px', fontWeight:'bolder', cursor:'pointer'} } onClick={handleClick} >Logout</button>
           </div>
         </div>
       </div>
