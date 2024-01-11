@@ -4,7 +4,7 @@ const {updateUser,deleteUser,getUser,followUser,unfollowUser} = require('../Cont
 
 router.put('/update-user/:id',updateUser)
 router.delete('/delete-user/:id',deleteUser)
-router.get('/get-user/:id',getUser)
+router.get('/',getUser)
 router.put('/follow/:id',followUser)
 router.put('/unfollow/:id',unfollowUser)
 

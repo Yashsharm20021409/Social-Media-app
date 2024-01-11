@@ -94,10 +94,21 @@ exports.getAllPost = async (req, res) => {
                 return Post.find({ userId: friendId });
             })
         )
-        // concated two array 
-        
-        res.status(200).json(userPost.concat(...friendsPosts));
+
+        const allData = userPost.concat(...friendsPosts);
+
+        res.status(200).json(allData);
     } catch (error) {
         res.status(500).json(error)
+    }
+}
+
+exports.userPost = async (req, res) => {
+    try {
+        const user = await User.findOne({ username: req.params.username });
+        const posts = await Post.find({ userId: user._id });
+        res.status(200).json(posts);
+    } catch (err) {
+        res.status(500).json(err);
     }
 }

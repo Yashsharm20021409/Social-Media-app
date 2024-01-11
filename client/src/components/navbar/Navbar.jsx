@@ -40,13 +40,13 @@ const Navbar = () => {
         <EmailOutlinedIcon className="right-icon" />
         <NotificationsOutlinedIcon className="right-icon" />
         <div className="user">
-          {/* <Link */}
-            {/* to={`/profile/${post.userId}`}
+          <img src={currentUser.profilePic} />
+          <Link
+            to={`/profile/${currentUser.username}`}
             style={{ textDecoration: "none", color: "inherit" }}
-          > */}
-            <img src={currentUser.profilePic} />
-          {/* </Link> */}
-          <span className="user-Name">{currentUser.name}</span>
+          >
+            <span className="user-Name">{currentUser.name}</span>
+          </Link>
         </div>
       </div>
     </div>

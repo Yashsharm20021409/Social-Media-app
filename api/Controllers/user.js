@@ -40,10 +40,16 @@ exports.deleteUser = async (req, res) => {
 }
 
 exports.getUser = async (req, res) => {
+    // merge both the requests by userId/username using query we get if there is userId/username in req
+    const userId = req.query.userId;
+    const username = req.query.username;
     try {
-        const user = await User.findById(req.params.id);
+        const user = userId
+            ? await User.findById(userId)
+            : await User.findOne({ username: username });
         // we removed pass,createdAt from user doc and store other things in other obj
         const { password, createdAt, updatedAt, __v, ...other } = user._doc;
+        // user.password = undefined
         res.status(200).json(other);
 
     } catch (error) {

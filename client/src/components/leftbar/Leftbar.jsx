@@ -1,4 +1,4 @@
-import './leftbar.scss'
+import "./leftbar.scss";
 import Friends from "../../assets/1.png";
 import Groups from "../../assets/2.png";
 import Market from "../../assets/3.png";
@@ -14,22 +14,25 @@ import Courses from "../../assets/12.png";
 import Fund from "../../assets/13.png";
 import { useContext } from "react";
 import { AuthContext } from "../../context/authContext";
+import { Link } from "react-router-dom";
 
 const Leftbar = () => {
-  const { currentUser } = useContext(AuthContext)
+  const { currentUser } = useContext(AuthContext);
 
-  const handleClick = ()=>{
-    localStorage.removeItem('user')
+  const handleClick = () => {
+    localStorage.removeItem("user");
     window.location.reload();
-  }
-  
+  };
+
   return (
     <div className="leftbar">
       <div className="container">
         <div className="menu">
           <div className="user">
             <img src={currentUser.profilePic} />
-            <span>{currentUser.name}</span>
+            <Link to={`/profile/${currentUser.username}`}  style={{ textDecoration: "none", color: "inherit" }}>
+              <span>{currentUser.name}</span>
+            </Link>
           </div>
           <div className="item">
             <img src={Friends} alt="" />
@@ -91,13 +94,29 @@ const Leftbar = () => {
             <img src={Courses} alt="" />
             <span>Courses</span>
           </div>
-          <div className="item" style={{justifyContent:'center',padding:'2px'}}>
-            <button type='button' style={{margin:'10px', padding:'12px 20px 12px 20px',border:'none',borderRadius:'5px', fontWeight:'bolder', cursor:'pointer'} } onClick={handleClick} >Logout</button>
+          <div
+            className="item"
+            style={{ justifyContent: "center", padding: "2px" }}
+          >
+            <button
+              type="button"
+              style={{
+                margin: "10px",
+                padding: "12px 20px 12px 20px",
+                border: "none",
+                borderRadius: "5px",
+                fontWeight: "bolder",
+                cursor: "pointer",
+              }}
+              onClick={handleClick}
+            >
+              Logout
+            </button>
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Leftbar
+export default Leftbar;

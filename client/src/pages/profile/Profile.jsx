@@ -1,4 +1,4 @@
-import './profile.scss'
+import "./profile.scss";
 import FacebookTwoToneIcon from "@mui/icons-material/FacebookTwoTone";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import InstagramIcon from "@mui/icons-material/Instagram";
@@ -8,19 +8,36 @@ import PlaceIcon from "@mui/icons-material/Place";
 import LanguageIcon from "@mui/icons-material/Language";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import Posts from "../../components/posts/Posts"
+import Posts from "../../components/posts/Posts";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../../context/authContext";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 const Profile = () => {
+  const { username } = useParams();
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const res = await axios.get(
+        `http://localhost:5000/api/user?username=${username}`
+      );
+      setUser(res.data);
+    };
+    fetchUser();
+  }, [username]);
+
   return (
     <div className="profile">
       <div className="images">
         <img
-          src="https://images.pexels.com/photos/13440765/pexels-photo-13440765.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+          src={user.coverPicture ? user.coverPicture:"https://images.pexels.com/photos/13440765/pexels-photo-13440765.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"}
           alt=""
           className="cover"
         />
         <img
-          src="https://images.pexels.com/photos/14028501/pexels-photo-14028501.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load"
+          src={user.profilePicture ? user.profilePicture:"https://images.pexels.com/photos/14028501/pexels-photo-14028501.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load"}
           alt=""
           className="profilePic"
         />
@@ -29,23 +46,23 @@ const Profile = () => {
         <div className="uInfo">
           <div className="left">
             <a href="http://facebook.com">
-              <FacebookTwoToneIcon  />
+              <FacebookTwoToneIcon />
             </a>
             <a href="http://facebook.com">
-              <InstagramIcon  />
+              <InstagramIcon />
             </a>
             <a href="http://facebook.com">
-              <TwitterIcon  />
+              <TwitterIcon />
             </a>
             <a href="http://facebook.com">
-              <LinkedInIcon  />
+              <LinkedInIcon />
             </a>
             <a href="http://facebook.com">
-              <PinterestIcon  />
+              <PinterestIcon />
             </a>
           </div>
           <div className="center">
-            <span>Bhola</span>
+            <span>{user.name}</span>
             <div className="info">
               <div className="item">
                 <PlaceIcon />
@@ -63,10 +80,10 @@ const Profile = () => {
             <MoreVertIcon />
           </div>
         </div>
-        <Posts />
+        <Posts username={username} />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Profile
+export default Profile;
