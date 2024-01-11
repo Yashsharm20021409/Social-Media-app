@@ -26,10 +26,14 @@ dotenv.config();
 
 
 // Routes
-const authRoutes = require('./Routes/auth')
+const authRoutes = require('./Routes/auth');
+const postRoute = require('./Routes/post');
+const userRoute = require('./Routes/user');
 
 
 app.use('/api/auth', authRoutes)
+app.use('/api/post',postRoute)
+app.use('/api/user',userRoute)
 
 
 app.listen(5000, () => {

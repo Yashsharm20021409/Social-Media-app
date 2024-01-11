@@ -10,9 +10,16 @@ import { useState } from "react";
 
 const Post = ({ post }) => {
   const [commentOpen, setCommentOpen] = useState(false);
+  const [like,setLike] = useState(post.like)
+  const [isLiked,setIsLiked] = useState(false);
 
   //TEMPORARY
-  const liked = true;
+  // const liked = true;
+
+  const likeHandler = ()=>{
+    setLike(isLiked ? like-1:like+1);
+    setIsLiked(!isLiked)
+  }
 
   return (
     <div className="post">
@@ -20,7 +27,7 @@ const Post = ({ post }) => {
         {/* three sections */}
         <div className="user">
           <div className="userInfo">
-            <img src={post.profilePic} alt="" />
+            <img src={post.profilePic ? post.profilePic : ""} alt="" />
             <div className="details">
               <Link
                 to={`/profile/${post.userId}`}
@@ -39,8 +46,8 @@ const Post = ({ post }) => {
         </div>
         <div className="info">
           <div className="item">
-            {liked ? <FavoriteOutlinedIcon /> : <FavoriteBorderOutlinedIcon />}
-            12 Likes
+            {isLiked ? <FavoriteOutlinedIcon onClick={likeHandler} /> : <FavoriteBorderOutlinedIcon onClick={likeHandler}/>}
+            {like}
           </div>
           <div className="item" onClick={() => setCommentOpen(!commentOpen)}>
             <TextsmsOutlinedIcon />
