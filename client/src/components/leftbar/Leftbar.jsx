@@ -15,9 +15,10 @@ import Fund from "../../assets/13.png";
 import { useContext } from "react";
 import { AuthContext } from "../../context/authContext";
 import { Link } from "react-router-dom";
+import profile from "./vecteezy_profile-icon-design-vector_5544718.jpg"
 
 const Leftbar = () => {
-  const { currentUser } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   const handleClick = () => {
     localStorage.removeItem("user");
@@ -29,9 +30,9 @@ const Leftbar = () => {
       <div className="container">
         <div className="menu">
           <div className="user">
-            <img src={currentUser.profilePic} />
-            <Link to={`/profile/${currentUser.username}`}  style={{ textDecoration: "none", color: "inherit" }}>
-              <span>{currentUser.name}</span>
+            <img src={user.profilePicture ? `http://localhost:5000/images/${user.profilePicture}`:profile} />
+            <Link to={`/profile/${user.username}`}  style={{ textDecoration: "none", color: "inherit" }}>
+              <span>{user.name}</span>
             </Link>
           </div>
           <div className="item">

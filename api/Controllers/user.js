@@ -1,9 +1,28 @@
 const User = require("../Models/User");
 const bcrypt = require('bcryptjs');
 
+//get friends
+exports.getAllFriends = async (req, res) => {
+    try {
+        const user = await User.findById(req.params.userId);
+        const friends = await Promise.all(
+            user.following.map((friendId) => {
+                return User.findById(friendId);
+            })
+        );
+        let friendList = [];
+        friends.map((friend) => {
+            const { _id, username, profilePicture, name } = friend;
+            friendList.push({ _id, username, profilePicture, name });
+        });
+        res.status(200).json(friendList)
+    } catch (err) {
+        res.status(500).json(err);
+    }
+};
 
 exports.updateUser = async (req, res) => {
-    if (req.body.userId === req.params.id || req.body.isAdmin) {
+    if (req.body.formData.userId === req.params.id || req.body.isAdmin) {
         if (req.body.password) {
             try {
                 const salt = await bcrypt.genSalt(10);
@@ -12,15 +31,19 @@ exports.updateUser = async (req, res) => {
                 return res.status(500).json(err);
             }
         }
+        // console.log(req.body)
         try {
             const user = await User.findByIdAndUpdate(req.params.id, {
-                $set: req.body,
+                $set: req.body.formData,
             });
-            res.status(200).json("Account has been updated");
+
+            const updatedUser = await User.findById(req.params.id);
+            res.status(200).json(updatedUser);
         } catch (err) {
             return res.status(500).json(err);
         }
-    } else {
+    }
+    else {
         return res.status(403).json("You can update only your account!");
     }
 
@@ -102,5 +125,30 @@ exports.unfollowUser = async (req, res) => {
         }
     } else {
         res.status(403).json("you cant unfollow yourself");
+    }
+}
+
+exports.getAllUsers = async (req, res) => {
+    try {
+        // const users = await User.find();
+        // res.status(200).json(users);
+        const loggedInUser = await User.findById(req.params.id);
+        const loggedInUserFollowing = loggedInUser.following;
+
+        // Fetch users not followed by the logged-in user
+        // const usersNotFollowedByLoggedInUser = await User.find({
+        //     _id: { $ne: req.params.id }, // Exclude the logged-in user
+        //     _id: { $nin: loggedInUserFollowing }, // Exclude users already followed
+        // });
+
+        const usersNotFollowedByLoggedInUser = await User.find({
+            _id: { $ne: req.params.id, $nin: loggedInUserFollowing }, // Exclude the logged-in user and users already followed
+          });
+
+        res.status(200).json(usersNotFollowedByLoggedInUser);
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal Server Error' });
     }
 }

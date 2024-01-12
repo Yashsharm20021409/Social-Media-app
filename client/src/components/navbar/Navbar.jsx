@@ -8,14 +8,14 @@ import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import { Link } from "react-router-dom";
-// import profile from "./vecteezy_profile-icon-design-vector_5544718.jpg"
+import profile from "./vecteezy_profile-icon-design-vector_5544718.jpg";
 import { useContext } from "react";
 import { DarkModeContext } from "../../context/darkModeContext";
 import { AuthContext } from "../../context/authContext";
 
 const Navbar = () => {
   const { toggle, darkMode } = useContext(DarkModeContext);
-  const { currentUser } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   return (
     <div className="navbar">
@@ -36,16 +36,23 @@ const Navbar = () => {
         </div>
       </div>
       <div className="right">
-        <PersonOutlinedIcon className="right-icon" />
+        <Link
+          to={"/friend-list"}
+          style={{ textDecoration: "none", color: "black" }}
+        >
+          <PersonOutlinedIcon
+            className="right-icon"
+            style={{ textDecoration: "none" }}
+          />{" "}
+        </Link>
         <EmailOutlinedIcon className="right-icon" />
         <NotificationsOutlinedIcon className="right-icon" />
         <div className="user">
-          <img src={currentUser.profilePic} />
           <Link
-            to={`/profile/${currentUser.username}`}
+            to={`/profile/${user.username}`}
             style={{ textDecoration: "none", color: "inherit" }}
           >
-            <span className="user-Name">{currentUser.name}</span>
+            <img src= {user.profilePicture ? `http://localhost:5000/images/${user.profilePicture}`:profile} />
           </Link>
         </div>
       </div>

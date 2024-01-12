@@ -1,0 +1,79 @@
+$primary-color: #3498db;
+$secondary-color: #2ecc71;
+
+.friend-list-container {
+    text-align: center;
+    margin: 20px;
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+    .friend-list-header {
+        // display: flex;
+        // align-items: center;
+        // justify-content: space-between;
+        margin-bottom: 20px;
+
+        .back-button {
+            background-color: $primary-color;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 4px;
+
+            &:hover {
+                background-color: darken($primary-color, 10%);
+            }
+        }
+
+        h2 {
+            color: $primary-color;
+            margin: 0;
+            font-size: 24px;
+        }
+    }
+
+    .friend-list {
+        list-style: none;
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+
+        .friend-item {
+            margin: 10px;
+            text-align: center;
+
+            .profile-picture {
+                width: 120px;
+                height: 120px;
+                border-radius: 50%;
+                border: 3px solid $primary-color;
+                object-fit: cover;
+                transition: transform 0.2s ease-in-out;
+                cursor: pointer;
+
+                &:hover {
+                    transform: scale(1.1);
+                }
+            }
+
+            .friend-name {
+                display: block;
+                margin-top: 8px;
+                color: $secondary-color;
+                font-weight: bold;
+                font-size: 16px;
+            }
+        }
+    }
+}
+
+.back-button {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}

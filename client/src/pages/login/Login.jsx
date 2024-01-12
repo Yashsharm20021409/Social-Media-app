@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "./login.scss";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/authContext";
+import axios from "axios";
 
 const ErrorMessage = ({ message }) => {
   return <div style={{ color: "black" }}>{message}</div>;
@@ -9,16 +10,10 @@ const ErrorMessage = ({ message }) => {
 
 const Login = () => {
   const navigate = useNavigate();
-  const { login } = useContext(AuthContext);
+  const { isFetching, dispatch } = useContext(AuthContext);
   const [password, setPassword] = useState("");
   const [userName, setUserName] = useState("");
   const [err, setErr] = useState(null);
-  const [isFormValid, setIsFormValid] = useState(false);
-
-  useEffect(() => {
-    // Update form validity whenever any input field changes
-    setIsFormValid(userName !== ""  && password !== "");
-  }, [userName, password]);
 
   const formData = {
     username: userName,
@@ -32,18 +27,29 @@ const Login = () => {
 
     try {
       // console.log("wiht",formData);
-      await login(formData);
-      navigate("/");
+      dispatch({ type: "LOGIN_START" });
+      try {
+        const res = await axios.post(
+          "http://localhost:5000/api/auth/login",
+          formData
+        );
+        dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
+        navigate("/")
+        window.location.reload()
+      } catch (err) {
+        dispatch({ type: "LOGIN_FAILURE", payload: err });
+      }
     } catch (err) {
       setErr(err?.response?.data);
     }
+    
   };
 
-  const [passwordVisible,setPasswordVisible] = useState(false);
+  const [passwordVisible, setPasswordVisible] = useState(false);
 
-  const handleChange = ()=>{
+  const handleChange = () => {
     setPasswordVisible(!passwordVisible);
-  }
+  };
 
   useEffect(() => {
     if (err) {
@@ -80,19 +86,27 @@ const Login = () => {
               onChange={(e) => {
                 setUserName(e.target.value);
               }}
+              min={3}
             />
             <input
-              type={`${passwordVisible === true ? "text":"password"}`}
+              type={`${passwordVisible === true ? "text" : "password"}`}
               placeholder="Password"
               onChange={(e) => {
                 setPassword(e.target.value);
               }}
+              min={3}
             />
             <div style={{ color: "black" }}>
-              <input value="test" type="checkbox" color="black" onChange={handleChange}/> Show password
+              <input
+                value="test"
+                type="checkbox"
+                color="black"
+                onChange={handleChange}
+              />{" "}
+              Show password
             </div>
             <div color="black"> {err && <ErrorMessage message={err} />}</div>
-            <button onClick={handleLogin} disabled={!isFormValid}>Login</button>
+            <button onClick={handleLogin}>Login</button>
           </form>
         </div>
       </div>

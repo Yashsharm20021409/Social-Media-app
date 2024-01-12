@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import { AuthContext } from "../../context/authContext"
 
 const Stories = () => {
-  const { currentUser } = useContext(AuthContext)
+  const { user } = useContext(AuthContext)
 
   //TEMPORARY
   const stories = [
@@ -32,8 +32,8 @@ const Stories = () => {
   return (
     <div className='stories'>
       <div className="story">
-        <img src={currentUser.profilePic} alt="" />
-        <span>{currentUser.name}</span>
+        <img src={`http://localhost:5000/images/${user.profilePicture}`} alt="" />
+        <span>{user.name}</span>
         <button>+</button>
       </div>
 

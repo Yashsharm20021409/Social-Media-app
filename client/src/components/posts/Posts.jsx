@@ -8,17 +8,17 @@ import { makeRequest } from "../../axios";
 
 const Posts = ({ username }) => {
   const [posts, setPosts] = useState([]);
-  const { currentUser } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   // problem with this is that it is not updating post of user when we go to profile through some different link
 
   // const { isLoading, error, data } = useQuery({
-  //   queryKey: ["post", username || currentUser?._id],
+  //   queryKey: ["post", username || user?._id],
   //   queryFn: () =>
   //     username
   //       ? makeRequest.get(`/post/profile/${username}`).then((res) => res.data)
   //       : makeRequest
-  //           .get(`/post/timeline/${currentUser?._id}`)
+  //           .get(`/post/timeline/${user?._id}`)
   //           .then((res) => res.data),
   //   staleTime: 60000, // using this it solve the above written problem the reason behing using this method to fetch posts i need this when i share any new post it can avialble without refreshing
   // });
@@ -28,7 +28,7 @@ const Posts = ({ username }) => {
       const res = username
         ? await axios.get(`http://localhost:5000/api/post/profile/${username}`)
         : await axios.get(
-            `http://localhost:5000/api/post/timeline/${currentUser?._id}`
+            `http://localhost:5000/api/post/timeline/${user?._id}`
           );
 
       setPosts(
@@ -39,7 +39,7 @@ const Posts = ({ username }) => {
     };
 
     fetchPosts();
-  }, [currentUser?._id, username]);
+  }, [user?._id, username]);
 
   return (
     <div className="posts">

@@ -11,10 +11,11 @@ import { AuthContext } from "./context/authContext";
 import { DarkModeContext } from "./context/darkModeContext";
 import "./style.scss"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import FriendList from "./components/friendList/FriendList";
 
 function App() {
 
-  const { currentUser } = useContext(AuthContext)
+  const { user } = useContext(AuthContext)
   const { darkMode } = useContext(DarkModeContext)
   const queryClient = new QueryClient();
 
@@ -44,7 +45,7 @@ function App() {
 
 
   const ProtectedRoute = ({ children }) => {
-    if (!currentUser) {
+    if (!user) {
       return <Navigate to="/login" />
     }
 
@@ -71,16 +72,24 @@ function App() {
           path: "/profile/:username",
           element: <Profile />,
         },
+        ,{
+          path:"/friend-list",
+          element:<FriendList/>
+        }
       ]
     },
     {
       path: '/login',
-      element: (currentUser === null ? <Login /> : "already logged in")
+      element: <Login />
     },
     {
       path: '/register',
-      element: (currentUser === null ? <Register /> : "already logged in")
+      element:<Register />
     }
+    // ,{
+    //   path:'friend-list',
+    //   element:<FriendList/>
+    // }
   ])
 
   return (

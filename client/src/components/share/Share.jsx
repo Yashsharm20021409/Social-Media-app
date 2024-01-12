@@ -2,7 +2,7 @@ import "./share.scss";
 import Image from "../../assets/img.png";
 import Map from "../../assets/map.png";
 import Friend from "../../assets/friend.png";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/authContext";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { makeRequest } from "../../axios";
@@ -10,15 +10,16 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import axios from "axios";
 
 const Share = () => {
-  const { currentUser } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [file, setFile] = useState(null);
   const [desc, setDesc] = useState("");
+
 
   const handleClick = async (e) => {
     e.preventDefault();
 
     const newPost = {
-      userId: currentUser._id,
+      userId: user._id,
       desc: desc,
     };
 
@@ -39,14 +40,17 @@ const Share = () => {
     } catch (err) {}
   };
 
+  // console.log(file.name.length > 1)
+
   return (
     <div className="share">
       <div className="container">
         <div className="top">
-          <img src={currentUser.profilePic} alt="" />
+          <img src={`http://localhost:5000/images/${user.profilePicture}`} alt="" />
           <input
             type="text"
-            placeholder={`What's on your mind ${currentUser.name}?`}
+            placeholder={`What's on your mind ${user.name}?`}
+            minLength={1}
             onChange={(e) => {
               setDesc(e.target.value);
             }}
@@ -88,7 +92,11 @@ const Share = () => {
             </div>
           </div>
           <div className="right">
-            <button onClick={handleClick}>Share</button>
+            {/* <button onClick={handleClick} disabled={desc.length < 6}>Share</button> */}
+            {file?
+            <button onClick={handleClick} >Share</button>:
+            <button onClick={handleClick} disabled={desc.length < 6}>Share</button>
+            }
           </div>
         </div>
       </div>

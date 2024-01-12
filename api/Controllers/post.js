@@ -33,6 +33,8 @@ exports.updatePost = async (req, res) => {
 exports.deletePost = async (req, res) => {
     try {
         const post = await Post.findById(req.params.id);
+        // console.log(post.userId)
+        // console.log(req.body.userId)
         if (post.userId === req.body.userId) {
             await post.deleteOne();
             res.status(200).json("the post has been deleted");
@@ -47,13 +49,14 @@ exports.deletePost = async (req, res) => {
 exports.likeDislikePost = async (req, res) => {
     try {
         const post = await Post.findById(req.params.id);
+        // console.log(req.params.id);
         // check if not liked like it otherwise dislike it
         if (!post.likes.includes(req.body.userId)) {
-            await Post.updateOne({ $push: { likes: req.body.userId } });
+            await post.updateOne({ $push: { likes: req.body.userId } });
             res.status(200).json("The post has been liked");
         }
         else {
-            await Post.updateOne({ $pull: { likes: req.body.userId } });
+            await post.updateOne({ $pull: { likes: req.body.userId } });
             res.status(200).json("The post has been disliked")
         }
     } catch (error) {
