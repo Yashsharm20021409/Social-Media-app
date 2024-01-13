@@ -40,6 +40,7 @@ const Posts = ({ username }) => {
 
     fetchPosts();
   }, [user?._id, username]);
+  // console.log(posts)
 
   return (
     <div className="posts">

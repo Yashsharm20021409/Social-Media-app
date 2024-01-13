@@ -115,3 +115,52 @@ exports.userPost = async (req, res) => {
         res.status(500).json(err);
     }
 }
+
+exports.addComments = async (req, res) => {
+    try {
+        const postId = req.params.id;
+        const { commenterId, text, commenterName, commenterUserName, commenterPicture, } = req.body;
+
+        // Find the post by ID and push the new comment
+        const post = await Post.findById(postId);
+        if (!post) {
+            return res.status(404).json({ error: 'Post not found' });
+        }
+
+        console.log(commenterId);
+        console.log(text);
+        post.comments.push({
+            name:commenterName,
+            username:commenterUserName,
+            profilePicture:commenterPicture,
+            commenterId,
+            text,
+        });
+
+        await post.save();
+
+        res.status(201).json({ success: true, comment: post.comments[post.comments.length - 1] });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}
+
+exports.getComments = async (req, res) => {
+    try {
+        const postId = req.params.id;
+
+        // Find the post by ID and retrieve the comments
+        const post = await Post.findById(postId);
+        if (!post) {
+            return res.status(404).json({ error: 'Post not found' });
+        }
+
+        const comments = post.comments;
+
+        res.status(200).json({ comments });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}

@@ -23,6 +23,7 @@ const Post = ({ post }) => {
   const [showOptions, setShowOptions] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
   const [editedDesc, setEditedDesc] = useState(post.desc);
+  const [countComments,setCountComments] = useState(post.comments.length)
 
 
   useEffect(() => {
@@ -50,7 +51,7 @@ const Post = ({ post }) => {
     // we used currentUser._id and post.Like
     // to mointer other users
     // to check regularly is there any update in post.like field
-  }, [currentUser._id, post.likes]);
+  }, [currentUser._id, post.likes,]);
 
   // it store data only in db we need above use effect to tell the browser post is liked until we not ftech any data from server and as we are using useEffect it fetch data only when it sees any changing in the stata
   const likeHandler = async () => {
@@ -163,7 +164,7 @@ const Post = ({ post }) => {
           </div>
           <div className="item" onClick={() => setCommentOpen(!commentOpen)}>
             <TextsmsOutlinedIcon />
-            12 Comments
+            {countComments}
           </div>
           <div className="item">
             <ShareOutlinedIcon />
@@ -171,7 +172,7 @@ const Post = ({ post }) => {
           </div>
         </div>
         {showEditForm && <EditForm post={post} onCancel={handleCancelEdit} onSave={handleSaveEdit} />}
-        {commentOpen && <Comments />}
+        {commentOpen && <Comments commentOpen={commentOpen} id={post._id} countComments={countComments} setCountComments={setCountComments}/>}
       </div>
     </div>
   );

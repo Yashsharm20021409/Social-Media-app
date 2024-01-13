@@ -19,6 +19,16 @@ const PostSchema = new mongoose.Schema(
         },
         comments: [
             {
+                profilePicture: {
+                    type: String,
+                    default: ""
+                },
+                name:{
+                    type:String,
+                },
+                username: {
+                    type: String,
+                },
                 commenterId: {
                     type: String,
                     required: true,

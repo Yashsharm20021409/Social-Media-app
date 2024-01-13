@@ -6,6 +6,7 @@
     gap: 10px;
     height: 150px;
     margin: 30px;
+    // overflow-y: scroll;
 
     @include mobile {
         height: 50px;
